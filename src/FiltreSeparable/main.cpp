@@ -1,17 +1,30 @@
 #include <sil/sil.hpp>
 
+
+
 int main()
 {
-    sil::Image image{"images/logo.png"};
+    sil::Image imageRef{"images/logo.png"};
+    sil::Image imageOutput{"images/logo.png"};
     // TODO: modifier l'image
-    
-    for (glm::vec3& color : image.pixels())
-    {
-        float pixel_baw{(color.r+color.b+color.g)/3};
-        color.r = pixel_baw;
-        color.b = pixel_baw;
-        color.g = pixel_baw;
-    }
-    image.save("output/exo3.png");
 
-}
+    int intensiteFlou{10};
+
+    for(int x{0}; x<imageOutput.width(); x++){
+        for(int y{0}; y<imageOutput.height(); y++){
+            glm::vec3 vecteur{};
+            for(int i{0}; i<2*intensiteFlou+1; i++){
+                for(int j{0}; j<2*intensiteFlou+1; j++){
+                    int xi{x+i-(intensiteFlou)};
+                    int yi{y+j-(intensiteFlou)};
+                    if((xi<0)||(yi<0)||(yi>=imageRef.height())||(xi>=imageRef.width())){
+                        vecteur += imageRef.pixel(x,y);
+                        continue;
+                    }
+                    vecteur += imageRef.pixel(xi,yi);
+                }
+            }
+            imageOutput.pixel(x,y) = vecteur/static_cast<float>(pow((intensiteFlou*2)+1,2));
+        }
+    }
+    imageOutput.save("output/exo21.png");

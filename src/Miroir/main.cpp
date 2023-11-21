@@ -2,16 +2,18 @@
 
 int main(){
     sil::Image imageRef{"images/logo.png"};
-    sil::Image imageOutPut{"images/logo.png"};
     // TODO: modifier l'image
     
-    for (int x{0}; x < imageOutPut.width(); ++x)
+    for (int x{0}; x < imageRef.width() / 2; ++x)
     {
-        for (int y{0}; y < imageOutPut.height(); ++y)
+        for (int y{0}; y < imageRef.height(); ++y)
         {
-            imageOutPut.pixel(x, y) = imageRef.pixel(imageOutPut.width()-x-1,y);
+          std::swap(
+             imageRef.pixel(x, y) ,
+              imageRef.pixel(imageRef.width()-x-1,y)
+          );
         }
     }
-    imageOutPut.save("output/exo6.png");
+    imageRef.save("output/exo6.png");
 
 }

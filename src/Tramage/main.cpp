@@ -15,26 +15,45 @@ std::vector<std::vector<float>> generateBayerLevel(int level){
         };
         return bayerInit;
     }
-    std::vector<std::vector<float>> bayerMatrix{generateBayerLevel(level-1)};
-    for(std::vector<float> & ligne : bayerMatrix){
-        int ligneSize(ligne.size());
-        for(int i{0}; i<ligneSize; i++){
-            ligne.push_back(ligne[i]);
+    std::vector<std::vector<float>> prevBayerMatrix{generateBayerLevel(level-1)};
+
+    size_t const size{2* prevBayerMatrix.size()};
+    std::vector<std::vector<float>> bayerMatrix(size);
+    for(std::vector<float>& line : bayerMatrix)
+        line.resize(size);
+
+    for(int x {0}; x < size; ++x)
+    {
+        for(int y{0}; y < size; ++y)
+        {
+            int X = x / prevBayerMatrix.size();
+            int Y = y / prevBayerMatrix.size();
+            bayerMatrix[x][y] = 4 *  prevBayerMatrix[x%prevBayerMatrix.size()][y%prevBayerMatrix.size()] + 2*X*(1+Y);
         }
     }
 
-    int bayerSize{static_cast<int>(bayerMatrix.size())};
-    for(int i{0}; i<bayerSize; i++){
-        bayerMatrix.push_back(bayerMatrix[i]);  
-    }
-    for(int i{0}; i<pow(2,level); i++){
-        for(int j{0}; j<pow(2,level); j++){
-            bayerMatrix[i][j] *= 4;
-            bayerMatrix[i][bayerMatrix[i].size()-1-j] = 4*bayerMatrix[i][bayerMatrix[i].size()-1-j] + 2;
-            bayerMatrix[bayerMatrix[i].size()-1-i][j] = 4*bayerMatrix[bayerMatrix[i].size()-1-i][j] + 3;
-            bayerMatrix[bayerMatrix[i].size()-1-i][bayerMatrix[i].size()-1-j] = 4*bayerMatrix[bayerMatrix[i].size()-1-i][bayerMatrix[i].size()-1-j] + 1;
-        }
-    }
+
+
+
+    // for(std::vector<float> & ligne : bayerMatrix){
+    //     int ligneSize(ligne.size());
+    //     for(int i{0}; i<ligneSize; i++){
+    //         ligne.push_back(ligne[i]);
+    //     }
+    // }
+
+    // int bayerSize{static_cast<int>(bayerMatrix.size())};
+    // for(int i{0}; i<bayerSize; i++){
+    //     bayerMatrix.push_back(bayerMatrix[i]);  
+    // }
+    // for(int i{0}; i<pow(2,level); i++){
+    //     for(int j{0}; j<pow(2,level); j++){
+    //         bayerMatrix[i][j] *= 4;
+    //         bayerMatrix[i][bayerMatrix[i].size()-1-j] = 4*bayerMatrix[i][bayerMatrix[i].size()-1-j] + 2;
+    //         bayerMatrix[bayerMatrix[i].size()-1-i][j] = 4*bayerMatrix[bayerMatrix[i].size()-1-i][j] + 3;
+    //         bayerMatrix[bayerMatrix[i].size()-1-i][bayerMatrix[i].size()-1-j] = 4*bayerMatrix[bayerMatrix[i].size()-1-i][bayerMatrix[i].size()-1-j] + 1;
+    //     }
+    // }
     return bayerMatrix;
 }
 

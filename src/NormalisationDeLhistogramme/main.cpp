@@ -4,7 +4,7 @@
 int main(){
     sil::Image image{"images/photo_faible_contraste.jpg"};
 
-    std::vector<int> pixelLePlusBlanc{0,0};
+   glm::ivec2 pixelLePlusBlanc{0,0};
     float maxBrightness{(image.pixel(0,0).r+image.pixel(0,0).b+image.pixel(0,0).g)/3};
     std::vector<int> pixelLePlusNoir{0,0};
     float minBrightness{(image.pixel(0,0).r+image.pixel(0,0).b+image.pixel(0,0).g)/3};

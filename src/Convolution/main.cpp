@@ -17,9 +17,11 @@ int main()
                 for(int j{0}; j<2*intensiteFlou+1; j++){
                     int xi{x+i-(intensiteFlou)};
                     int yi{y+j-(intensiteFlou)};
-                    if((xi<0)||(yi<0)||(yi>=imageRef.height())||(xi>=imageRef.width())){
-                        vecteur += imageRef.pixel(x,y);
-                        continue;
+                    if((xi<0)||(xi>=imageRef.width())){
+                        xi = x;
+                    }
+                    if((yi<0)||(yi>=imageRef.height())){
+                        yi = y;
                     }
                     vecteur += imageRef.pixel(xi,yi);
                 }

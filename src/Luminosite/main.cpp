@@ -7,9 +7,9 @@ int main()
 
     // TODO: modifier l'image
     for(glm::vec3& color : imageAssombrie.pixels()){
-        color.r = pow(color.r,5);
-        color.g = pow(color.g,5);
-        color.b = pow(color.b,5);
+
+
+        color = glm::pow(color, glm::vec3{5.});
     }
 
     for(glm::vec3& color : imageEclaircie.pixels()){

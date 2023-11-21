@@ -7,9 +7,7 @@ int main()
     
     for (glm::vec3& color : image.pixels())
     {
-        color.r = 1-color.r;
-        color.b = 1-color.b;
-        color.g = 1-color.g;
+        color = 1.f-color;
     }
     image.save("output/exo4.png");
 
