@@ -8,17 +8,20 @@ int main()
     sil::Image imageOutput{"images/logo.png"};
     // TODO: modifier l'image
 
-    int intensiteFlou{5};
+    int intensiteFlou{10};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){
             glm::vec3 vecteur{};
             for(int i{0}; i<2*intensiteFlou+1; i++){
                 for(int j{0}; j<2*intensiteFlou+1; j++){
-                    if((x+i-(intensiteFlou)<intensiteFlou)||(y+j-(intensiteFlou)<intensiteFlou)||(x+i-(intensiteFlou)>imageOutput.width()-intensiteFlou-1)||(y+j-(intensiteFlou)>imageOutput.height()-intensiteFlou-1)){
+                    int xi{x+i-(intensiteFlou)};
+                    int yi{y+j-(intensiteFlou)};
+                    if((xi<0)||(yi<0)||(yi>=imageRef.height())||(xi>=imageRef.width())){
+                        vecteur += imageRef.pixel(x,y);
                         continue;
                     }
-                    vecteur += imageRef.pixel(x+i-(intensiteFlou),y+j-(intensiteFlou));
+                    vecteur += imageRef.pixel(xi,yi);
                 }
             }
             imageOutput.pixel(x,y) = vecteur/static_cast<float>(pow((intensiteFlou*2)+1,2));
