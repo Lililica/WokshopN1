@@ -68,7 +68,7 @@ int main(){
         { 15.f, 7.f, 13.f, 5.f}
     };*/
 
-    int levelOfBayerMatrix{2};
+    int levelOfBayerMatrix{4};
     std::vector<std::vector<float>> bayerInit{generateBayerLevel(levelOfBayerMatrix)};
 
     for (int x{0}; x<image.width(); x++){
