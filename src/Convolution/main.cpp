@@ -4,11 +4,11 @@
 
 int main()
 {
-    sil::Image imageRef{"images/logo.png"};
-    sil::Image imageOutput{"images/logo.png"};
+    sil::Image imageRef{"images/photo.jpg"};
+    sil::Image imageOutput{"images/photo.jpg"};
     // TODO: modifier l'image
 
-    int intensiteFlou{10};
+    int intensiteFlou{2};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){
@@ -29,5 +29,5 @@ int main()
             imageOutput.pixel(x,y) = vecteur/static_cast<float>(pow((intensiteFlou*2)+1,2));
         }
     }
-    imageOutput.save("output/exo21.png");
+    imageOutput.save("images/photoFlou.jpg");
 }
