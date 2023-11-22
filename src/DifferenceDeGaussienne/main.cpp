@@ -1,16 +1,24 @@
 #include <sil/sil.hpp>
+#include <iostream>
 
-glm::vec3 makeFlouGauss(int intensiteFlou, int x, int y, sil::Image imageRef){
-            glm::vec3 vecteur{};
+glm::vec3 makeFlouGauss(int intensiteFlou, int x, int y, sil::Image const& imageRef){
+            glm::vec3 vecteuri{};
             for(int i{0}; i<2*intensiteFlou+1; i++){
+                glm::vec3 vecteurj{};
                 for(int j{0}; j<2*intensiteFlou+1; j++){
-                    if((x+i-(intensiteFlou)<intensiteFlou)||(y+j-(intensiteFlou)<intensiteFlou)||(x+i-(intensiteFlou)>imageRef.width()-intensiteFlou-1)||(y+j-(intensiteFlou)>imageRef.height()-intensiteFlou-1)){
-                        continue;
+                    int xi{x+i-(intensiteFlou)};
+                    int yi{y+j-(intensiteFlou)};
+                    if((xi<0)||(xi>=imageRef.width())){
+                        xi = x;
                     }
-                    vecteur += imageRef.pixel(x+i-(intensiteFlou),y+j-(intensiteFlou));
+                    if((yi<0)||(yi>=imageRef.height())){
+                        yi = y;
+                    }
+                    vecteurj += imageRef.pixel(xi,yi);
                 }
+                vecteuri += vecteurj/static_cast<float>((2*intensiteFlou)+1);
             }
-            return vecteur;
+            return vecteuri;
 }
 
 int main()
@@ -20,14 +28,26 @@ int main()
     // TODO: modifier l'image
 
     int intensiteFlou{1};
-    int intensiteFlouSub{3};
+    int intensiteFlouSub{5};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){
-            glm::vec3 vecteur{makeFlouGauss(intensiteFlou, x, y, imageRef)};
-            glm::vec3 vecteur_sub{makeFlouGauss(intensiteFlouSub, x, y, imageRef)};
-            vecteur -= vecteur_sub;
-            imageOutput.pixel(x,y) = vecteur/static_cast<float>(pow((intensiteFlou*2)+1,2));
+
+            glm::vec3 vecteur{makeFlouGauss( intensiteFlou, x, y, imageRef)};
+            glm::vec3 vecteurSub{makeFlouGauss( intensiteFlouSub, x, y, imageRef)};
+    
+            vecteur /= static_cast<float>((intensiteFlou*2)+1);
+            vecteurSub /= static_cast<float>((intensiteFlouSub*2)+1);
+            float tau{2.5};
+            vecteur = (1+tau)*vecteur-tau*vecteurSub;
+             float brightness{(vecteur.r+vecteur.b+vecteur.g)/3};
+            // float brightnessSub{(vecteurSub.r+vecteurSub.b+vecteurSub.g)/3};
+            if(brightness>0.2f){
+                 imageOutput.pixel(x,y) = glm::vec3{1.f};
+                 continue;
+            }
+            imageOutput.pixel(x,y) = glm::vec3{0.f};
+            // imageOutput.pixel(x,y) = vecteur;
         }
     }
     imageOutput.save("output/exo24.png");
