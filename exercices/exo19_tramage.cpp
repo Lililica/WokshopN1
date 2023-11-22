@@ -42,5 +42,5 @@ int main()
 		}
 	}
 
-	image.save("output/normalisation_histogramme.png");
+	image.save("output/tramage.png");
 }
