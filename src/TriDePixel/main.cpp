@@ -26,7 +26,7 @@ int main()
         if((randomCheck==randomFiltrage)&&(i+largeurATrier*((i/largeurATrier)+1)<2*size)){
             std::sort(image.pixels().begin()+i, image.pixels().begin()+largeurATrier*((i/largeurATrier)+1), [](glm::vec3 const& color1, glm::vec3 const& color2)
             {
-                return (color1.r+color1.b+color1.g)/3 < (color2.r+color2.b+color2.g)/3; // Trie selon la composante rouge
+                return (color1.r+color1.b+color1.g)/3 < (color2.r+color2.b+color2.g)/3; 
             });
         }
     }
