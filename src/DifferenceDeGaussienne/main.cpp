@@ -29,6 +29,7 @@ int main()
 
     int intensiteFlou{1};
     int intensiteFlouSub{5};
+    float const facteurBlancNoir{0.2};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){
@@ -42,7 +43,7 @@ int main()
             vecteur = (1+tau)*vecteur-tau*vecteurSub;
              float brightness{(vecteur.r+vecteur.b+vecteur.g)/3};
             // float brightnessSub{(vecteurSub.r+vecteurSub.b+vecteurSub.g)/3};
-            if(brightness>0.2f){
+            if(brightness>facteurBlancNoir){
                  imageOutput.pixel(x,y) = glm::vec3{1.f};
                  continue;
             }

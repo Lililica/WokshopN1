@@ -56,6 +56,6 @@ int main(){
         }
     }
 
-    image.save("output/exo27.png");
+    image.save("output/KMeans/3colors1.png");
 
 }

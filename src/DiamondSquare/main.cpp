@@ -141,6 +141,6 @@ int main(){
 
 
 
-    image.save("output/exo28Modif.png");
+    image.save("output/DiamondSquare/Rough(2).png");
 
 }

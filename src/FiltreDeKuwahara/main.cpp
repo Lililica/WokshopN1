@@ -36,8 +36,8 @@ int getIndiceDuMax(std::array<float,4> ecartType){
 
 int main()
 {
-    sil::Image imageRef{"images/photoFlou.jpg"};
-    sil::Image imageOutput{"images/photoFlou.jpg"};
+    sil::Image imageRef{"images/photoFlou10.jpg"};
+    sil::Image imageOutput{"images/photoFlou10.jpg"};
     // TODO: modifier l'image
 
     int intensiteFlou{2};
@@ -99,5 +99,5 @@ int main()
             imageOutput.pixel(x,y) = pixelMoyen[indiceDuMax];
         }
     }
-    imageOutput.save("output/exo26avecModif.png");
+    imageOutput.save("output/Kuwahara/intensiteentree10.png");
 }

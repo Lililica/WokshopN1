@@ -8,7 +8,7 @@ int main()
     sil::Image imageOutput{"images/photo.jpg"};
     // TODO: modifier l'image
 
-    int intensiteFlou{1};
+    int intensiteFlou{10};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){
@@ -29,5 +29,5 @@ int main()
             imageOutput.pixel(x,y) = vecteur/static_cast<float>(pow((intensiteFlou*2)+1,2));
         }
     }
-    imageOutput.save("images/photoFlou.jpg");
+    imageOutput.save("images/photoFlou10.jpg");
 }

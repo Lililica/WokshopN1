@@ -21,35 +21,35 @@ int main()
                     float facteur{1};
                     if(i-(intensiteFlou)>0){
                         if(j-(intensiteFlou)<0){
-                            facteur = 0.f;
-                        }
-                        if(j-(intensiteFlou)==0){
                             facteur = -1.f;
                         }
+                        if(j-(intensiteFlou)==0){
+                            facteur = 1.f;
+                        }
                         if(j-(intensiteFlou)>0){
-                            facteur = 0.f;
+                            facteur = -1.f;
                         }
                     }
                     if(i-(intensiteFlou)==0){
                         if(j-(intensiteFlou)<0){
-                            facteur = -1.f;
+                            facteur = 1.f;
                         }
                         if(j-(intensiteFlou)==0){
-                            facteur = 5.f;
+                            facteur = 0.5f;
                         }
                         if(j-(intensiteFlou)>0){
-                            facteur = -1.f;
+                            facteur = 1.f;
                         }
                     }
                     if(i-(intensiteFlou)<0){
                         if(j-(intensiteFlou)<0){
-                            facteur = 0.f;
-                        }
-                        if(j-(intensiteFlou)==0){
                             facteur = -1.f;
                         }
+                        if(j-(intensiteFlou)==0){
+                            facteur = 1.f;
+                        }
                         if(j-(intensiteFlou)>0){
-                            facteur = 0.f;
+                            facteur = -1.f;
                         }
                     }
                     vecteur += facteur*imageRef.pixel(x+i-(intensiteFlou),y+j-(intensiteFlou));
@@ -58,5 +58,5 @@ int main()
             imageOutput.pixel(x,y) = vecteur;
         }
     }
-    imageOutput.save("output/exo22_sharpen.png");
+    imageOutput.save("output/NetteteContour/Perso.png");
 }
