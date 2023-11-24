@@ -41,40 +41,40 @@ float getBrightness(glm::vec3 & color){
 //     return milieu.y + (Top.y-milieu.y + Bot.y-milieu.y);
 // }
 
-void squareStep(int & chunkSize, int & half, int &heightMapSize, sil::Image & image, float&  scaleRandom, int nbrDeNuance){
+void squareStep(int & chunkSize, int & half, int &heightMapSize, sil::Image & image, float&  scaleRandom){
     for(int x{0}; x<heightMapSize-1; x+=chunkSize){
         for(int y{0}; y<heightMapSize-1; y+=chunkSize){
             float brightnessMiddle{(getBrightness(image.pixel(x,y))+getBrightness(image.pixel(x + chunkSize,y)) + getBrightness(image.pixel(x + chunkSize,y + chunkSize)) + getBrightness(image.pixel(x ,y + chunkSize)))/4};
-            image.pixel(x + half, y + half) = glm::vec3{static_cast<float>(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+            image.pixel(x + half, y + half) = glm::vec3{(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
         }
     }
 }
 
-void diamondStep(int & chunkSize, int & half, int &heightMapSize, sil::Image & image, float&  scaleRandom, int nbrDeNuance){
+void diamondStep(int & chunkSize, int & half, int &heightMapSize, sil::Image & image, float&  scaleRandom){
     for(int x{0}; x<heightMapSize-1; x+=half){
         for(int y{(x+half)%chunkSize}; y<heightMapSize-1; y+=chunkSize){
             if(y-half<0){
                 float brightnessMiddle{(getBrightness(image.pixel(x - half,y)) + getBrightness(image.pixel(x + half,y )) + getBrightness(image.pixel(x ,y + half)))/3};
-                image.pixel(x, y) = glm::vec3{static_cast<float>(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+                image.pixel(x, y) = glm::vec3{brightnessMiddle} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
             }
             else if (x-half<0)
             {
                 float brightnessMiddle{(getBrightness(image.pixel(x,y - half)) + getBrightness(image.pixel(x + half,y )) + getBrightness(image.pixel(x ,y + half)))/3};
-                image.pixel(x, y) = glm::vec3{static_cast<float>((brightnessMiddle))} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+                image.pixel(x, y) = glm::vec3{(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
             }
             else if (y+half>=image.height())
             {
                 float brightnessMiddle{(getBrightness(image.pixel(x,y - half)) + getBrightness(image.pixel(x - half,y)) + getBrightness(image.pixel(x + half,y )))/3};
-                image.pixel(x , y ) = glm::vec3{static_cast<float>((brightnessMiddle))} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+                image.pixel(x , y ) = glm::vec3{(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
             }
             else if (x+half>=image.width())
             {
                 float brightnessMiddle{(getBrightness(image.pixel(x,y - half)) + getBrightness(image.pixel(x - half,y))  + getBrightness(image.pixel(x ,y + half)))/3};
-                image.pixel(x , y ) = glm::vec3{static_cast<float>((brightnessMiddle))} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+                image.pixel(x , y ) = glm::vec3{(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
             }
             else{
                 float brightnessMiddle{(getBrightness(image.pixel(x,y - half))+getBrightness(image.pixel(x - half,y)) + getBrightness(image.pixel(x + half,y )) + getBrightness(image.pixel(x ,y + half)))/4};
-                image.pixel(x , y ) = glm::vec3{static_cast<float>((brightnessMiddle))} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
+                image.pixel(x , y ) = glm::vec3{(brightnessMiddle)} + glm::vec3{random_float(-scaleRandom,scaleRandom)};
             }
             
         }
@@ -83,7 +83,7 @@ void diamondStep(int & chunkSize, int & half, int &heightMapSize, sil::Image & i
 
 int main(){
     
-    int tailleDuTableau{11};
+    int tailleDuTableau{9};
 
     sil::Image image{static_cast<int>(pow(2,tailleDuTableau))+1/*width*/, static_cast<int>(pow(2,tailleDuTableau))+1/*height*/};
 
@@ -93,7 +93,7 @@ int main(){
 
 
     int nbrDeNuance{8};
-    float roughness{0.8f};
+    float roughness{2.f};
     
 
     extremP botLef {0, 0, random_int(0,nbrDeNuance)};
@@ -110,8 +110,8 @@ int main(){
 
     while(chunkSize>1){
         int halfOfChunk{chunkSize/2};
-        squareStep(chunkSize, halfOfChunk, heightMapSize, image, roughness, nbrDeNuance);
-        diamondStep(chunkSize, halfOfChunk, heightMapSize, image, roughness, nbrDeNuance);
+        squareStep(chunkSize, halfOfChunk, heightMapSize, image, roughness);
+        diamondStep(chunkSize, halfOfChunk, heightMapSize, image, roughness);
         chunkSize /= 2;
         roughness /= 2;
     }
@@ -141,6 +141,6 @@ int main(){
 
 
 
-    image.save("output/exo28.png");
+    image.save("output/exo28Modif.png");
 
 }

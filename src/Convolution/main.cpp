@@ -8,7 +8,7 @@ int main()
     sil::Image imageOutput{"images/photo.jpg"};
     // TODO: modifier l'image
 
-    int intensiteFlou{2};
+    int intensiteFlou{1};
 
     for(int x{0}; x<imageOutput.width(); x++){
         for(int y{0}; y<imageOutput.height(); y++){

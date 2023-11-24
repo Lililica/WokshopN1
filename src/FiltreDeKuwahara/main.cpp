@@ -3,22 +3,35 @@
 #include <array>
 #include <iostream>
 
-float getEcartType(std::vector<glm::vec3> section, int color, float moyenne){
-    float sum{0};
+float getEcartType(std::vector<glm::vec3> & section, glm::vec3 moyenne){
+    glm::vec3 sum{0, 0, 0};
     for(int i{0}; i<section.size(); i++){
-        sum += pow(section[i][color]-moyenne,2);
+        sum += glm::vec3{pow(section[i].r-moyenne.r,2),pow(section[i].b-moyenne.b,2),pow(section[i].g-moyenne.g,2)};
     }
-    sum = pow(sum/section.size(),0.5f);
-    return sum;
+    sum = glm::vec3{pow(sum.r/section.size(),0.5f),pow(sum.g/section.size(),0.5f),pow(sum.b/section.size(),0.5f)};
+    float result{(sum.r+sum.b+sum.g)/3};
+    return result;
 }
 
-float getMoyenne(std::vector<glm::vec3> section, int color){
-    float sum{0};
+glm::vec3 getMoyenne(std::vector<glm::vec3> & section){
+    glm::vec3 sum{0, 0, 0};
     for(int i{0}; i<section.size(); i++){
-        sum += section[i][color];
+        sum += section[i];
     }
     sum /= section.size();
     return sum;
+}
+
+int getIndiceDuMax(std::array<float,4> ecartType){
+    int indiceDuMax{0};
+    float minDeEcartType{1}; 
+    for(int i{0}; i<4; i++){
+        if(ecartType[i]<minDeEcartType){
+            minDeEcartType = ecartType[i];
+            indiceDuMax = i;
+        }
+    }
+    return indiceDuMax;
 }
 
 int main()
@@ -45,55 +58,46 @@ int main()
                     if((yi<0)||(yi>=imageRef.height())){
                         yi = y;
                     }
-                    if((i-intensiteFlou)>0){
-                        if((j-intensiteFlou)>0){
+                    if((i-intensiteFlou)>=0){
+                        if((j-intensiteFlou)>=0){
                             fourthSection.push_back(imageRef.pixel(xi,yi));
                         }
-                        if((j-intensiteFlou)<0){
+                        if((j-intensiteFlou)<=0){
                             thirdSection.push_back(imageRef.pixel(xi,yi));
                         }
                     }
-                    if((i-intensiteFlou)<0){
-                        if((j-intensiteFlou)>0){
+                    if((i-intensiteFlou)<=0){
+                        if((j-intensiteFlou)>=0){
                             secondSection.push_back(imageRef.pixel(xi,yi));
                         }
-                        if((j-intensiteFlou)<0){
+                        if((j-intensiteFlou)<=0){
                             firstSection.push_back(imageRef.pixel(xi,yi));
                         }
                     }
+
                 }
             }
 
             std::array<glm::vec3,4> pixelMoyen{
-                glm::vec3{getMoyenne(firstSection, 0),getMoyenne(firstSection, 1),getMoyenne(firstSection, 2)},
-                glm::vec3{getMoyenne(secondSection, 0),getMoyenne(secondSection, 1),getMoyenne(secondSection, 2)},
-                glm::vec3{getMoyenne(thirdSection, 0),getMoyenne(thirdSection, 1),getMoyenne(thirdSection, 2)},
-                glm::vec3{getMoyenne(fourthSection, 0),getMoyenne(fourthSection, 1),getMoyenne(fourthSection, 2)},
+                glm::vec3{getMoyenne(firstSection)},
+                glm::vec3{getMoyenne(secondSection)},
+                glm::vec3{getMoyenne(thirdSection)},
+                glm::vec3{getMoyenne(fourthSection)},
 
             };
 
             std::array<float,4> ecartType{
-                (getEcartType(firstSection, 0, getMoyenne(firstSection, 0))+getEcartType(firstSection, 1, getMoyenne(firstSection, 1))+getEcartType(firstSection, 2, getMoyenne(firstSection, 2)))/3,
-                (getEcartType(secondSection, 0, getMoyenne(secondSection, 0))+getEcartType(secondSection, 1, getMoyenne(secondSection, 1))+getEcartType(secondSection, 2, getMoyenne(secondSection, 2)))/3,
-                (getEcartType(thirdSection, 0, getMoyenne(thirdSection, 0))+getEcartType(thirdSection, 1, getMoyenne(thirdSection, 1))+getEcartType(thirdSection, 2, getMoyenne(thirdSection, 2)))/3,
-                (getEcartType(fourthSection, 0, getMoyenne(fourthSection, 0))+getEcartType(fourthSection, 1, getMoyenne(fourthSection, 1))+getEcartType(fourthSection, 2, getMoyenne(fourthSection, 2)))/3,
+                getEcartType(firstSection, pixelMoyen[0]),
+                getEcartType(secondSection, pixelMoyen[1]),
+                getEcartType(thirdSection, pixelMoyen[2]),
+                getEcartType(fourthSection, pixelMoyen[3]),
             };
 
-            // for(float a : ecartType){
-            //     std::cout << a << ", ";
-            // }
-            // std::cout << std::endl;
-            int indiceDuMax{0};
-            float minDeEcartType{1};
-            for(int i{0}; i<4; i++){
-                if(ecartType[i]<minDeEcartType){
-                    minDeEcartType = ecartType[i];
-                    indiceDuMax = i;
-                }
-            }
+
+            int indiceDuMax{getIndiceDuMax(ecartType)};
 
             imageOutput.pixel(x,y) = pixelMoyen[indiceDuMax];
         }
     }
-    imageOutput.save("output/exo26.png");
+    imageOutput.save("output/exo26avecModif.png");
 }

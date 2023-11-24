@@ -28,6 +28,7 @@ function(add_exercise FOLDER)
     # Link sil into the project
     target_link_libraries(${FOLDER} PRIVATE sil)
 
+
 endfunction(add_exercise)
 
 add_exercise(NeGardezQueLeVert)
@@ -58,3 +59,4 @@ add_exercise(TriDePixel)
 add_exercise(FiltreDeKuwahara)
 add_exercise(KMeans)
 add_exercise(DiamondSquare)
+
