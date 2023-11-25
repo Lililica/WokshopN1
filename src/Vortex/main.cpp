@@ -11,16 +11,18 @@ int main(){
     sil::Image imageRef{"images/logo.png"};
     sil::Image imageOutPut{imageRef.width(), imageRef.height()};
     
+    float const levelOfRotating{30000000};
 
     int x0{imageOutPut.width()/2};
     int y0{imageOutPut.height()/2};
+    
 
     for (int x{0}; x < imageOutPut.width(); ++x)
     {
         for (int y{0}; y < imageOutPut.height(); ++y)
         {
             double rayonActuel{pow(pow(x-x0,2)+pow(y-y0,2),0.5)};
-            double angle{rayonActuel*2*3.14/static_cast<float>(imageRef.height()/5)};
+            double angle{rayonActuel*2*3.14*levelOfRotating*0.01};
 
             glm::vec2 vecteur{x-x0,y-y0};
             vecteur = rotated(vecteur, angle);
@@ -32,6 +34,6 @@ int main(){
         }
     }
 
-    imageOutPut.save("output/exo18.png");
+    imageOutPut.save("output/Vortex/Level30000000.png");
 
 }

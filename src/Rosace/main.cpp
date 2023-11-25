@@ -5,7 +5,7 @@ int main()
 {
     sil::Image image{500/*width*/, 500/*height*/}; 
 
-    int nbrRosace{9};
+    int nbrRosace{100};
     int Rayon{100};
     int thickness{5};
 
@@ -42,6 +42,6 @@ int main()
     }
 
 
-    image.save("output/exo13.png");
+    image.save("output/Rosace/100Petal.png");
 
 }

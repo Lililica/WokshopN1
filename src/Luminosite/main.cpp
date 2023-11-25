@@ -5,20 +5,18 @@ int main()
     sil::Image imageEclaircie{"images/photo.jpg"};
     sil::Image imageAssombrie{"images/photo.jpg"};
 
+    float intensiteModify{-2};
+
     // TODO: modifier l'image
     for(glm::vec3& color : imageAssombrie.pixels()){
-
-
-        color = glm::pow(color, glm::vec3{5.});
+        color = glm::pow(color, glm::vec3{intensiteModify});
     }
 
     for(glm::vec3& color : imageEclaircie.pixels()){
-        color.r = pow(color.r,0.3);
-        color.g = pow(color.g,0.3);
-        color.b = pow(color.b,0.3);
+        color = glm::pow(color,glm::vec3{1/intensiteModify});
     }   
 
-    imageEclaircie.save("output/exo10LumiUp.png");
-    imageAssombrie.save("output/exo10LumiDown.png");
+    imageEclaircie.save("output/Luminosite/LumiUpModif-2.png");
+    imageAssombrie.save("output/Luminosite/LumiDownModif-2.png");
 
 }

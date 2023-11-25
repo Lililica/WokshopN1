@@ -3,7 +3,7 @@
 #include <array>
 #include <iostream>
 
-float getEcartType(std::vector<glm::vec3> & section, glm::vec3 moyenne){
+float getEcartType(std::vector<glm::vec3> const& section, glm::vec3 moyenne){
     glm::vec3 sum{0, 0, 0};
     for(int i{0}; i<section.size(); i++){
         sum += glm::vec3{pow(section[i].r-moyenne.r,2),pow(section[i].b-moyenne.b,2),pow(section[i].g-moyenne.g,2)};
@@ -13,7 +13,7 @@ float getEcartType(std::vector<glm::vec3> & section, glm::vec3 moyenne){
     return result;
 }
 
-glm::vec3 getMoyenne(std::vector<glm::vec3> & section){
+glm::vec3 getMoyenne(std::vector<glm::vec3> const& section){
     glm::vec3 sum{0, 0, 0};
     for(int i{0}; i<section.size(); i++){
         sum += section[i];
@@ -74,7 +74,6 @@ int main()
                             firstSection.push_back(imageRef.pixel(xi,yi));
                         }
                     }
-
                 }
             }
 

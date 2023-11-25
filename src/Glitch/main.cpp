@@ -5,7 +5,7 @@ int main(){
     sil::Image imageRef{"images/logo.png"};
     sil::Image imageOutPut{"images/logo.png"};
 
-    int const nbr_glitch{100};
+    int const nbr_glitch{50};
 
     for(int i{0}; i<nbr_glitch; i++){
         // Creation du rectangle à copier
@@ -13,7 +13,7 @@ int main(){
         int x0{random_int(0, imageOutPut.width() - maxWidth)};
         int y0{random_int(0, imageOutPut.height() - 10)};
         int w{random_int(2,maxWidth)}; 
-        int h{random_int(1,5)};
+        int h{random_int(1,8)};
 
         // Determiner ou on met le rectangle
         int xi{random_int(0, imageOutPut.width() - maxWidth)};
@@ -22,11 +22,11 @@ int main(){
         // On copie colle le rectangle
         for(int x_offset{0}; x_offset < w; x_offset++){
             for(int y_offset{0}; y_offset < h; y_offset++){
-                imageOutPut.pixel(xi + x_offset,yi + y_offset) = imageRef.pixel(x0 + x_offset,y0 + y_offset);
+                std::swap(imageOutPut.pixel(xi + x_offset,yi + y_offset), imageRef.pixel(x0 + x_offset,y0 + y_offset));
             }
         }
     }  
 
-    imageOutPut.save("output/exo16.png");
+    imageOutPut.save("output/Glitch/Glitch50.png");
 
 }

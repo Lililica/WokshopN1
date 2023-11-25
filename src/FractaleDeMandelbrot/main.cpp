@@ -21,6 +21,6 @@ int main(){
         }
     }
 
-    image.save("output/exo17.png");
+    image.save("output/Fractale/Test4.png");
 
 }

@@ -6,8 +6,8 @@ int main()
 
     int const centerX{(image.width()-1)/2};
     int const centerY{(image.height()-1)/2};
-    int const Rayon{100};
-    int const thickness{10};
+    int const Rayon{200};
+    int const thickness{2};
 
     for(int x{0}; x<image.width(); x++){
         for(int y{0}; y<image.height(); y++){
@@ -18,6 +18,6 @@ int main()
         }
     }
 
-    image.save("output/exo12.png");
+    image.save("output/Cercle/R200T2.png");
 
 }
