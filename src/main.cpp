@@ -5,7 +5,7 @@ int main()
 {
     sil::Image image{"images/photo.jpg"};
     
-   float puissance{0.0};
+   float puissance{2.0};
 	for (int x{0}; x < image.width(); x++)
 	{
 		for (int y{0}; y < image.height(); y++)
