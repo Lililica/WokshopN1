@@ -4,7 +4,7 @@
 int main()
 {
 	sil::Image image{"images/photo.jpg"};
-	sil::Image resultat{image.width(), image.height()};
+	
 	const int bayer_n{4};
 	float matrice[][bayer_n] = {
 		{-0.5, 0, -0.375, 0.125},
