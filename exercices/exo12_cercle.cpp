@@ -13,7 +13,9 @@ int main()
 	{
 		for (int y{0}; y < image.height(); y++)
     		{
-				if (pow(y - y0, 2) + pow(x - x0, 2) <= pow(rayon, 2) && pow(y - y0, 2) + pow(x - x0, 2) >= pow(rayon-10, 2)) {
+                // On peut faire une variable pour éviter de faire le calcul deux fois, et rendre le code plus lisible
+                float const distance_squared{pow(y - y0, 2) + pow(x - x0, 2)};
+				if (distance_squared <= pow(rayon, 2) && distance_squared >= pow(rayon-10, 2)) {
 					image.pixel(x, y) = glm::vec3{1,1,1};
 				}
 			

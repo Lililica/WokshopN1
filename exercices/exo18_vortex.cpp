@@ -13,17 +13,16 @@ int main()
 	sil::Image resultat{image.width(), image.height()};
 	
     
-    float angle{90.0};
+    // float angle{90.0}; // Variable inutilisée
 	int x0{image.width()/2};
 	int y0{image.height()/2};
 	glm::vec2 origine{x0, y0};
-	int rayon{};
 		 
 	for (int x{0}; x < image.width(); x++)
 	{
 		for (int y{0}; y < image.height(); y++)
     		{
-			rayon = pow(pow(x - x0,2)+pow(y -y0,2),0.5f);
+			int const rayon = pow(pow(x - x0,2)+pow(y -y0,2),0.5f); // On préfère déclarer les variables le plus tard possible, seulement quand on en a réellement besoin
 			glm::vec2 vecteur{x, y};
 			glm::vec2 resultant {rotated(vecteur, origine, 0.1f*rayon)};
 			int xi{static_cast<int>(resultant[0])};

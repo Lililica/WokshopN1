@@ -19,16 +19,15 @@ int main()
 			std::complex<float> c{x0, y0};
 			std::complex<float> z{0, 0};
 			int compteur{0};
-			float color{};
 
 			while (compteur < 30) {
-				color = static_cast<float>(compteur)/30;
 				z = z * z + c;
 				if (std::abs(z) > 2) {
 					break;
 				}
 				compteur ++;
 			}
+            float const color = static_cast<float>(compteur)/30; // Plutôt que de faire le calcul à chaque itération de la boucle, on peut ne le faire qu'une seule fois à la fin, ça évite de faire compteur-1 calculs inutiles qui seront écrasés à l'itération suivante
 
 			image.pixel(x, y) = glm::vec3{color};
 
