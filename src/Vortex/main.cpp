@@ -11,7 +11,7 @@ int main(){
     sil::Image imageRef{"images/logo.png"};
     sil::Image imageOutPut{imageRef.width(), imageRef.height()};
     
-    float const levelOfRotating{30000000};
+    float const levelOfRotating{30'000'000}; // Il est possible de rajouter des ' pour rendre les nombres plus faciles à lire.
 
     int x0{imageOutPut.width()/2};
     int y0{imageOutPut.height()/2};

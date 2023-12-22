@@ -21,6 +21,7 @@ int main(){
     }
     
     while(!stop){
+        // Le code mériterait quelques commentaires pour bien distinguer les différentes sections de l'algo. Ou alors faire des fonctions intermédiaires.
         for(int x{0}; x<image.width(); x++){
             for(int y{0}; y<image.height(); y++){
                 glm::vec3 color{image.pixel(x, y)};

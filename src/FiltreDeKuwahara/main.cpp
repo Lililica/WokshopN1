@@ -6,9 +6,9 @@
 float getEcartType(std::vector<glm::vec3> const& section, glm::vec3 moyenne){
     glm::vec3 sum{0, 0, 0};
     for(int i{0}; i<section.size(); i++){
-        sum += glm::vec3{pow(section[i].r-moyenne.r,2),pow(section[i].b-moyenne.b,2),pow(section[i].g-moyenne.g,2)};
+        sum += glm::pow(section[i]-moyenne,glm::vec3{2.f}); // glm fournit plein de fonctions qui s'appliquent sur les trois canaux en même temps
     }
-    sum = glm::vec3{pow(sum.r/section.size(),0.5f),pow(sum.g/section.size(),0.5f),pow(sum.b/section.size(),0.5f)};
+    sum = glm::pow(sum/section.size(),glm::vec3{0.5f});
     float result{(sum.r+sum.b+sum.g)/3};
     return result;
 }
@@ -22,9 +22,9 @@ glm::vec3 getMoyenne(std::vector<glm::vec3> const& section){
     return sum;
 }
 
-int getIndiceDuMax(std::array<float,4> ecartType){
+int getIndiceDuMax(std::array<float,4> const& ecartType){ // const& pour éviter de copier 4 floats
     int indiceDuMax{0};
-    float minDeEcartType{1}; 
+    float minDeEcartType{FLT_MAX}; // plutôt que de devoir réfléchir à trouver un majorant pour notre écart-type, on peut juste prendre le plus grand float possible 
     for(int i{0}; i<4; i++){
         if(ecartType[i]<minDeEcartType){
             minDeEcartType = ecartType[i];
@@ -100,3 +100,5 @@ int main()
     }
     imageOutput.save("output/Kuwahara/intensiteentree10.png");
 }
+
+// J'aime bien le code, il est très lisible. Mais par contre il n'est pas 100% opti, car faire une copie de tes pixels dans les quatres tableaux firstSection etc. a un coût. La version que j'ai mise dans la correction évite ces copies en faisant les calculs de moyenne / ecart-type directement dans les boucles, mais est du coup un peu moins lisible. (https://github.com/Cours-Prog-Imac/S1-Prog-Workshop-Solution/blob/main/src/Filtre%20de%20Kuwahara.cpp)
