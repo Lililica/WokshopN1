@@ -60,7 +60,7 @@ std::vector<std::vector<float>> generateBayerLevel(int level){
 // Les deux fonctions suivantes m'ont permis de débuguer 
 
 void displayvec(std::vector<std::vector<float>> v){
-    for(std::vector<float> ligne : v){
+    for(std::vector<float> const& ligne : v){
         std::cout << "[ ";
         for(float elemt : ligne){
             std::cout << elemt << ", ";

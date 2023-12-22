@@ -242,7 +242,7 @@ où $α∈R^+$.
 On distinguera donc deux cas :
     - Si $α∈[0,1]$ :
 *<p style="text-align: center;">La luminosité va être augmentée</p>*
-    - Si $α∈[1,+\inf{}]$ :
+    - Si $α∈[1,+\infty{}]$ :
 
 *<p style="text-align: center;">La luminosité va être diminuée</p>*
 
